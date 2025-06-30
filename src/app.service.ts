@@ -20,7 +20,7 @@ export class AppService {
     try {
       console.log('Running scheduled task to scrape movies at ', new Date());
       // Step 1: Scrape movies
-      const movies = await this.scarpeMovies();
+      const movies = await this.scrapeMovies();
 
       console.log(`Scraped ${movies?.length} movies at ${new Date()}`);
 
@@ -40,13 +40,23 @@ export class AppService {
     }
   }
 
-  async scarpeMovies() {
+  async scrapeMovies() {
     try {
       let movies: any[] = [];
 
       const { data: html } = await axios.get(
-        'https://lk.bookmyshow.com/sri-lanka/movies/nowshowing',
-      ); // Replace with actual URL
+        'https://lk.bookmyshow.com/sri-lanka/movies',
+        {
+          headers: {
+            'User-Agent':
+              'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36',
+            'Accept-Language': 'en-US,en;q=0.9',
+            Referer: 'https://www.google.com/',
+            Accept:
+              'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+          },
+        },
+      );
       const $ = cheerio.load(html);
 
       // Step 1: Find the script block containing the impressions array

@@ -12,7 +12,7 @@ export class AppController {
 
   @Get('scrape')
   scrapeMovies() {
-    return this.appService.scarpeMovies();
+    return this.appService.scrapeMovies();
   }
 
   @Post('add-email')
