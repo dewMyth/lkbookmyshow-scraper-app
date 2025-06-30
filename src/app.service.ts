@@ -45,31 +45,31 @@ export class AppService {
     try {
       let movies: any[] = [];
 
-      const browser = await puppeteer.launch({
-        headless: true,
-        args: ['--no-sandbox', '--disable-setuid-sandbox'],
-      });
-      const page = await browser.newPage();
-      await page.goto('https://lk.bookmyshow.com/sri-lanka/movies', {
-        waitUntil: 'domcontentloaded',
-      });
-      const content = await page.content();
-      await browser.close();
+      // const browser = await puppeteer.launch({
+      //   headless: true,
+      //   args: ['--no-sandbox', '--disable-setuid-sandbox'],
+      // });
+      // const page = await browser.newPage();
+      // await page.goto('https://lk.bookmyshow.com/sri-lanka/movies', {
+      //   waitUntil: 'domcontentloaded',
+      // });
+      // const content = await page.content();
+      // await browser.close();
 
-      // const { data: html } = await axios.get(
-      //   'https://lk.bookmyshow.com/sri-lanka/movies',
-      //   {
-      //     headers: {
-      //       'User-Agent':
-      //         'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36',
-      //       'Accept-Language': 'en-US,en;q=0.9',
-      //       Referer: 'https://www.google.com/',
-      //       Accept:
-      //         'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
-      //     },
-      //   },
-      // );
-      const $ = cheerio.load(content);
+      const { data: html } = await axios.get(
+        'https://lk.bookmyshow.com/sri-lanka/movies',
+        {
+          headers: {
+            'User-Agent':
+              'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36',
+            'Accept-Language': 'en-US,en;q=0.9',
+            Referer: 'https://www.google.com/',
+            Accept:
+              'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+          },
+        },
+      );
+      const $ = cheerio.load(html);
 
       // Step 1: Find the script block containing the impressions array
       const scriptTags = $('script').toArray();
